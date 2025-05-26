@@ -1,0 +1,76 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Decodificador de VIN</h2>
+
+  <!-- Loading spinner -->
+  @if (loading) {
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+  }
+
+  <!-- Error message -->
+  @if (error) {
+    <div class="alert alert-danger">
+      {{ error }}
+    </div>
+  }
+
+  <!-- Example VINs -->
+  <div class="row mb-4">
+    <div class="col">
+      <h4>VINs de Ejemplo</h4>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        @for (item of exampleVins; track item.vin) {
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.description }}</h5>
+                <p class="card-text">VIN: {{ item.vin }}</p>
+                <p class="card-text">Año: {{ item.year }}</p>
+                <button class="btn btn-primary" 
+                        (click)="decodeVin(item.vin, item.year)"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#vehicleModal">
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Vehicle Details Modal -->
+  @if (selectedVehicle) {
+    <div class="modal fade" id="vehicleModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Detalles del Vehículo</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>Marca:</strong> {{ selectedVehicle.make }}</p>
+                <p><strong>Modelo:</strong> {{ selectedVehicle.model }}</p>
+                <p><strong>Año:</strong> {{ selectedVehicle.modelYear }}</p>
+                <p><strong>Trim:</strong> {{ selectedVehicle.trim }}</p>
+              </div>
+              <div class="col-md-6">
+                <p><strong>Tipo:</strong> {{ selectedVehicle.vehicleType }}</p>
+                <p><strong>Carrocería:</strong> {{ selectedVehicle.bodyClass }}</p>
+                <p><strong>Motor:</strong> {{ selectedVehicle.engineConfiguration }} {{ selectedVehicle.engineNumberOfCylinders }} cilindros</p>
+                <p><strong>Combustible:</strong> {{ selectedVehicle.fuelTypePrimary }}</p>
+                <p><strong>Potencia:</strong> {{ selectedVehicle.engineBrakeHpFrom }} HP</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

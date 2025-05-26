@@ -1,0 +1,13 @@
+.footer {
+    margin-top: auto;
+    background-color: #343a40;
+}
+
+.social-links a {
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.social-links a:hover {
+    opacity: 0.8;
+}

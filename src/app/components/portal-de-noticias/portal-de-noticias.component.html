@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col">
+      <h2>Noticias Deportivas</h2>
+    </div>
+  </div>
+
+  <!-- Loading indicator -->
+  @if (cargando) {
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+  }
+
+  <!-- Error message -->
+  @if (error) {
+    <div class="alert alert-danger">
+      {{ error }}
+    </div>
+  }
+
+  <!-- News grid -->
+  @if (!cargando && !error) {
+    <div class="row">
+      @for (noticia of noticias; track noticia.id) {
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img [src]="noticia.imageUrl" 
+                 [alt]="noticia.title"
+                 class="card-img-top"
+                 style="height: 200px; object-fit: cover;"
+                 onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=No+Image'">
+            <div class="card-body">
+              <h5 class="card-title">{{noticia.title}}</h5>
+              <p class="card-text">{{noticia.subtitle}}</p>
+              @if (noticia.publishedAt) {
+                <p class="card-text"><small class="text-muted">{{noticia.publishedAt | date}}</small></p>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
